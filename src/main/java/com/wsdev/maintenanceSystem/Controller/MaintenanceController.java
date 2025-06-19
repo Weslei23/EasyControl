@@ -1,4 +1,4 @@
-package com.wsdev.maintenanceSystem.Controllers;
+package com.wsdev.maintenanceSystem.Controller;
 
 import com.wsdev.maintenanceSystem.Dto.MaintenanceDTO;
 import com.wsdev.maintenanceSystem.Dto.MaintenanceRequestDTO;
@@ -12,41 +12,42 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping( "/LineaMaint" )
+@RequestMapping( "/api/v1/maintenances" )
+@CrossOrigin( origins = "http://localhost:5173" )
 public class MaintenanceController
 {
     @Autowired
     private MaintenanceService maintenanceService;
 
-    @GetMapping( "/maintenances" )
+    @GetMapping( )
     public ResponseEntity<List<MaintenanceDTO>> getMaintenances()
     {
         List<MaintenanceDTO> list = maintenanceService.getMaintenances();
         return ResponseEntity.ok( list );
     }
 
-    @GetMapping( "/maintenance/{id}" )
+    @GetMapping( "/{id}" )
     public ResponseEntity<MaintenanceDTO> getMaintenanceById( @PathVariable UUID id )
     {
         MaintenanceDTO dto = maintenanceService.getMaintenanceById( id );
         return ResponseEntity.ok( dto );
     }
 
-    @PostMapping( "/maintenance/add" )
+    @PostMapping( "/add" )
     public ResponseEntity<MaintenanceDTO> createMaintenance( @Valid @RequestBody MaintenanceRequestDTO dto )
     {
         MaintenanceDTO created = maintenanceService.addMaintenance( dto );
         return ResponseEntity.ok( created );
     }
 
-    @PutMapping( "/maintenance/update/{id}" )
+    @PutMapping( "/update/{id}" )
     public ResponseEntity<MaintenanceDTO> updateMaintenance( @PathVariable UUID id, @Valid @RequestBody MaintenanceRequestDTO dto )
     {
         MaintenanceDTO updated = maintenanceService.updateMaintenance( id, dto );
         return ResponseEntity.ok( updated );
     }
 
-    @DeleteMapping( "/maintenance/delete/{id}" )
+    @DeleteMapping( "/delete/{id}" )
     public ResponseEntity<Void> deleteMaintenance( @PathVariable UUID id )
     {
         maintenanceService.deleteMaintenance( id );

@@ -2,14 +2,12 @@ package com.wsdev.maintenanceSystem.Services;
 
 import com.wsdev.maintenanceSystem.Dto.EmployeeDTO;
 import com.wsdev.maintenanceSystem.Dto.EmployeeRequestDTO;
-import com.wsdev.maintenanceSystem.Dto.MaintenanceDTO;
 import com.wsdev.maintenanceSystem.Models.EmployeeModel;
 import com.wsdev.maintenanceSystem.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,7 +16,7 @@ public class EmployeeService
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public List<EmployeeDTO> getEmployeers()
+    public List<EmployeeDTO> getEmployees()
     {
         return employeeRepository.findAll().stream()
             .map( EmployeeDTO::from ).toList();

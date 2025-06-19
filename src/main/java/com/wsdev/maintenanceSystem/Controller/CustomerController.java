@@ -15,38 +15,39 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping( "/LineaMaint" )
+@RequestMapping( "/api/v1/customers" )
+@CrossOrigin( origins = "http://localhost:5173" )
 public class CustomerController
 {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping( "/customers" )
+    @GetMapping( )
     public ResponseEntity<List<CustomerDTO>> getCustomers()
     {
         return ResponseEntity.ok( customerService.getCustomers() );
     }
 
-    @GetMapping( "/customer/{id}" )
+    @GetMapping( "/{id}" )
     public ResponseEntity<CustomerDTO> getCustomerById( @PathVariable UUID id )
     {
         return ResponseEntity.ok( customerService.getCustomerById( id ) );
     }
 
-    @PostMapping( "/customer/add" )
+    @PostMapping( "/add" )
     public ResponseEntity<CustomerDTO> addCustomer( @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
     {
         CustomerDTO customerDTO = customerService.addCustomer( customerRequestDTO );
         return new ResponseEntity<>( customerDTO, HttpStatus.CREATED );
     }
 
-    @PutMapping("/customer/update/{id}" )
+    @PutMapping("/update/{id}" )
     public ResponseEntity<CustomerDTO> updateCustomer( @PathVariable UUID id, @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
     {
         return ResponseEntity.ok( customerService.updateCustomer( id, customerRequestDTO ) );
     }
 
-    @DeleteMapping( "/customer/delete/{id}" )
+    @DeleteMapping( "/delete/{id}" )
     public ResponseEntity<Void> deleteCustomer( @PathVariable UUID id )
     {
         customerService.deleteCustomerById( id );
