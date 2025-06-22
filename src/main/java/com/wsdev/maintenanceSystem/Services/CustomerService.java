@@ -45,8 +45,6 @@ public class CustomerService
         customerModel.setTelephone( customerRequestDTO.telephone() );
         customerModel.setEmail( customerRequestDTO.email() );
         customerModel.setAddress( customerRequestDTO.address().toEntity() );
-//        customerModel.setMaintenances( customerRequestDTO.maintenances().stream().map( MaintenanceDTO::toEntity).toList() );
-
         CustomerModel customerModelUpdate = customerRepository.save( customerModel );
 
         return CustomerDTO.from( customerModelUpdate );

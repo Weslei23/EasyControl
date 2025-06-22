@@ -34,7 +34,7 @@ public class MaintenanceController
     }
 
     @PostMapping( "/add" )
-    public ResponseEntity<MaintenanceDTO> createMaintenance( @Valid @RequestBody MaintenanceRequestDTO dto )
+    public ResponseEntity<MaintenanceDTO> addMaintenance( @Valid @RequestBody MaintenanceRequestDTO dto )
     {
         MaintenanceDTO created = maintenanceService.addMaintenance( dto );
         return ResponseEntity.ok( created );
