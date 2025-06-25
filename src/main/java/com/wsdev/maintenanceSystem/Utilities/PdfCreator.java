@@ -1,7 +1,9 @@
 package com.wsdev.maintenanceSystem.Utilities;
 
 import com.wsdev.maintenanceSystem.Dto.MaintenanceDTO;
-import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.stereotype.Service;
@@ -20,20 +22,36 @@ public class PdfCreator
             PDPage page = new PDPage( PDRectangle.A4 );
             document.addPage( page );
 
+            PDRectangle pageSize = page.getMediaBox();
+            float pageWidth = pageSize.getWidth();
+            float pageHeight = pageSize.getHeight();
+
+            float margin = 50f;
+            float leading = 16f;
+            float cursorY = pageHeight - margin;
+
             try ( PDPageContentStream content = new PDPageContentStream( document, page ) )
             {
-                float yPosition = 0;
+                String title = "Relatório de Manutenção";
+                int titleFontSize = 18;
+
+                float titleWidth = PDType1Font.HELVETICA_BOLD.getStringWidth( title ) / 1000 * titleFontSize;
+                float titleX = ( pageWidth - titleWidth ) / 2;
+
                 content.beginText();
-                content.setFont( PDType1Font.HELVETICA_BOLD, 18 );
-                content.setLeading( 20f );
-                content.newLineAtOffset( 50, 750 );
+                content.setFont( PDType1Font.HELVETICA_BOLD, titleFontSize );
+                content.newLineAtOffset( titleX, cursorY);
+                content.showText( title );
+                content.endText();
 
-                content.showText( "Relatório de Manutenção" );
-                content.newLine();
+                cursorY -= 2 * leading;
 
+                content.beginText();
                 content.setFont( PDType1Font.HELVETICA, 12 );
-                content.newLine();
-                content.showText( "Id: " + dto.id() );
+                content.setLeading( leading );
+                content.newLineAtOffset( margin, cursorY );
+
+                content.showText( "Codígo da manutenção: " + dto.id() );
                 content.newLine();
                 content.showText( "Cliente: " + dto.customerName() );
                 content.newLine();
@@ -44,26 +62,55 @@ public class PdfCreator
                 content.showText( "Data Agendada: " + dto.scheduledDate() );
                 content.endText();
 
-                content.setStrokingColor(Color.LIGHT_GRAY); // cor das linhas (cinza claro)
-                content.setLineWidth(0.5f); // espessura fina
+                cursorY -= 6 * leading;
 
-                float margin = 50;
-                float width = PDRectangle.A4.getWidth() - 2 * margin;
-                float startY = PDRectangle.A4.getHeight() - margin; // topo da área útil
-                float endY = margin; // margem inferior
+                String linhaEmBranco = "________________________";
 
-                float lineSpacing = 10; // distância entre linhas em pontos
+                content.beginText();
+                content.setFont( PDType1Font.HELVETICA, 12 );
+                content.newLineAtOffset( margin, cursorY );
 
-                for (float y = startY; y > endY; y -= lineSpacing) {
-                    content.moveTo(margin, y);
-                    content.lineTo(margin + width, y);
+                content.showText( "Data/Hora Início: " + linhaEmBranco + "    " );
+                content.showText( "Data/Hora Fim: "   + linhaEmBranco );
+                content.endText();
+
+                cursorY -= 2 * leading;
+
+                content.beginText();
+                content.setFont( PDType1Font.HELVETICA_BOLD, 12 );
+                content.newLineAtOffset( margin, cursorY );
+                content.showText( "Materiais Utilizados:" );
+                content.endText();
+
+                cursorY -= leading;
+
+                float notebookHeight = 200f;
+                float notebookStartY = cursorY;
+                float notebookEndY = cursorY - notebookHeight;
+                float lineSpacing = 14f;
+
+                content.setStrokingColor( Color.GRAY );
+                content.setLineWidth( 0.5f );
+                content.addRect( margin, notebookEndY, pageWidth - 2 * margin, notebookHeight );
+                content.stroke();
+
+                content.setStrokingColor( Color.LIGHT_GRAY );
+                for ( float y = notebookStartY - lineSpacing; y > notebookEndY; y -= lineSpacing )
+                {
+                    content.moveTo( margin, y );
+                    content.lineTo( pageWidth - margin, y );
                     content.stroke();
                 }
 
+                content.beginText();
+                content.setFont( PDType1Font.HELVETICA, 12 );
+                content.newLineAtOffset( margin, 350 );
+                content.showText( "Assinatura do cliente: " + linhaEmBranco + "    " );
+                content.endText();
             }
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            document.save( out );
+            document.save(out);
             return out.toByteArray();
         }
     }

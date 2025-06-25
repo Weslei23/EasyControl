@@ -18,18 +18,19 @@ public class PdfCreatorController
     private final PdfCreator pdfService;
 
     @PostMapping("/manutencao")
-    public ResponseEntity<byte[]> gerarPdf(@RequestBody MaintenanceDTO dto) {
-        try {
-            byte[] pdfBytes = pdfService.gerarPdfManutencao(dto);
+    public ResponseEntity<byte[]> gerarPdf( @RequestBody MaintenanceDTO dto ) throws IOException
+    {
+        try
+        {
+            byte[] pdfBytes = pdfService.gerarPdfManutencao( dto );
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=manutencao.pdf")
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(pdfBytes);
+                    .header( HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=manutencao.pdf" )
+                    .contentType( MediaType.APPLICATION_PDF ).body( pdfBytes );
         }
         catch ( IOException ex )
         {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
         }
     }
 }
