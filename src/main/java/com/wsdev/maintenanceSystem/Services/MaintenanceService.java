@@ -25,7 +25,7 @@ public class MaintenanceService
             .stream().map( MaintenanceDTO::from ).toList();
     }
 
-    public MaintenanceDTO getMaintenanceById( UUID id )
+    public MaintenanceDTO getMaintenanceById( Long id )
     {
         MaintenanceModel maintenance = maintenanceRepository.findById( id )
             .orElseThrow( () -> new RuntimeException( "Manutenção não encontrada" ) );
@@ -47,7 +47,7 @@ public class MaintenanceService
         return MaintenanceDTO.from( maintenance );
     }
 
-    public MaintenanceDTO updateMaintenance( UUID id, MaintenanceRequestDTO dto )
+    public MaintenanceDTO updateMaintenance( Long id, MaintenanceRequestDTO dto )
     {
         MaintenanceModel maintenance = maintenanceRepository.findById( id )
             .orElseThrow( () -> new RuntimeException( "Manutenção não encontrada" ) );
@@ -64,7 +64,7 @@ public class MaintenanceService
         return MaintenanceDTO.from( maintenance );
     }
 
-    public void deleteMaintenance( UUID id )
+    public void deleteMaintenance( Long id )
     {
         if ( !maintenanceRepository.existsById( id ) )
         {

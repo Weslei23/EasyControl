@@ -2,14 +2,12 @@ package com.wsdev.maintenanceSystem.Services;
 
 import com.wsdev.maintenanceSystem.Dto.CustomerDTO;
 import com.wsdev.maintenanceSystem.Dto.CustomerRequestDTO;
-import com.wsdev.maintenanceSystem.Dto.MaintenanceDTO;
 import com.wsdev.maintenanceSystem.Models.CustomerModel;
 import com.wsdev.maintenanceSystem.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CustomerService
@@ -23,7 +21,7 @@ public class CustomerService
             .map( CustomerDTO::from ).toList();
     }
 
-    public CustomerDTO getCustomerById( UUID id )
+    public CustomerDTO getCustomerById( Long id )
     {
         CustomerModel customerModel = customerRepository.findById( id )
             .orElseThrow( () -> new RuntimeException( "Cliente não encontrado" ) );
@@ -36,7 +34,7 @@ public class CustomerService
         return CustomerDTO.from( customerModel );
     }
 
-    public CustomerDTO updateCustomer( UUID id, CustomerRequestDTO customerRequestDTO )
+    public CustomerDTO updateCustomer( Long id, CustomerRequestDTO customerRequestDTO )
     {
         CustomerModel customerModel = customerRepository.findById( id )
             .orElseThrow( () -> new RuntimeException( "Cliente não encontrado") );
@@ -50,7 +48,7 @@ public class CustomerService
         return CustomerDTO.from( customerModelUpdate );
     }
 
-    public void deleteCustomerById( UUID id )
+    public void deleteCustomerById( Long id )
     {
         customerRepository.deleteById( id );
     }

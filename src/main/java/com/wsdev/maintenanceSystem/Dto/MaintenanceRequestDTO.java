@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public record MaintenanceRequestDTO(
 
@@ -23,8 +22,8 @@ public record MaintenanceRequestDTO(
         String descriptionService,
 
         @NotNull( message = "O ID do cliente é obrigatório" )
-        UUID customerId,
+        Long customerId,
 
         @NotNull( message = "O ID do funcionário é obrigatório" )
-        UUID employeeId
+        Long employeeId
 ) {}

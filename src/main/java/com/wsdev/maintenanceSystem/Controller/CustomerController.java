@@ -2,7 +2,6 @@ package com.wsdev.maintenanceSystem.Controller;
 
 import com.wsdev.maintenanceSystem.Dto.CustomerDTO;
 import com.wsdev.maintenanceSystem.Dto.CustomerRequestDTO;
-import com.wsdev.maintenanceSystem.Models.CustomerModel;
 import com.wsdev.maintenanceSystem.Services.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping( "/api/v1/customers" )
@@ -29,7 +27,7 @@ public class CustomerController
     }
 
     @GetMapping( "/{id}" )
-    public ResponseEntity<CustomerDTO> getCustomerById( @PathVariable UUID id )
+    public ResponseEntity<CustomerDTO> getCustomerById( @PathVariable Long id )
     {
         return ResponseEntity.ok( customerService.getCustomerById( id ) );
     }
@@ -42,13 +40,13 @@ public class CustomerController
     }
 
     @PutMapping("/update/{id}" )
-    public ResponseEntity<CustomerDTO> updateCustomer( @PathVariable UUID id, @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
+    public ResponseEntity<CustomerDTO> updateCustomer( @PathVariable Long id, @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
     {
         return ResponseEntity.ok( customerService.updateCustomer( id, customerRequestDTO ) );
     }
 
     @DeleteMapping( "/delete/{id}" )
-    public ResponseEntity<Void> deleteCustomer( @PathVariable UUID id )
+    public ResponseEntity<Void> deleteCustomer( @PathVariable Long id )
     {
         customerService.deleteCustomerById( id );
         return ResponseEntity.noContent().build();

@@ -1,14 +1,12 @@
 package com.wsdev.maintenanceSystem.Dto;
 
-import com.wsdev.maintenanceSystem.Models.AddressModel;
 import com.wsdev.maintenanceSystem.Models.CustomerModel;
-import com.wsdev.maintenanceSystem.Models.MaintenanceModel;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public record CustomerDTO(UUID id, String name, String telephone, String email, AddressDTO address, List<MaintenanceDTO> maintenances )
+public record CustomerDTO( Long id, String name, String telephone, String email, AddressDTO address, List<MaintenanceDTO> maintenances )
 {
     public static CustomerDTO from( CustomerModel customerModel )
     {
@@ -19,7 +17,7 @@ public record CustomerDTO(UUID id, String name, String telephone, String email, 
         customerModel.getEmail(),
         AddressDTO.from( customerModel.getAddress() ),
         Optional.ofNullable( customerModel.getMaintenances() )
-            .orElse( List.of() ).stream().map( MaintenanceDTO::from ).toList() );
+                .orElse( List.of() ).stream().map( MaintenanceDTO::from ).toList() );
     }
 
     public CustomerModel toEntity()

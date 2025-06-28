@@ -4,9 +4,8 @@ import com.wsdev.maintenanceSystem.Models.EmployeeModel;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public record EmployeeRequestDTO(UUID id, String name, String telephone, String specialty, List<MaintenanceDTO> maintenances )
+public record EmployeeRequestDTO( Long id, String name, String telephone, String specialty, List<MaintenanceDTO> maintenances )
 {
     public EmployeeModel toEntity()
     {
@@ -18,7 +17,7 @@ public record EmployeeRequestDTO(UUID id, String name, String telephone, String 
         employeeModel.setMaintenances( Optional.ofNullable( maintenances )
             .orElse( List.of() ).stream().map( MaintenanceDTO::toEntity ).toList()
         );
-        return employeeModel;
 
+        return employeeModel;
     }
 }

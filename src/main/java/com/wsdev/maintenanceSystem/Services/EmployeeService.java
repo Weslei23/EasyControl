@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class EmployeeService
@@ -22,7 +21,7 @@ public class EmployeeService
             .map( EmployeeDTO::from ).toList();
     }
 
-    public EmployeeDTO getEmployeeById( UUID id )
+    public EmployeeDTO getEmployeeById( Long id )
     {
         EmployeeModel employeeModel = employeeRepository.findById( id )
             .orElseThrow( () -> new RuntimeException( "Funcionário não encontrado" ) );
@@ -35,7 +34,7 @@ public class EmployeeService
         return EmployeeDTO.from( employeeModel );
     }
 
-    public EmployeeDTO updateEmployee( UUID id, EmployeeRequestDTO employeeRequestDTO )
+    public EmployeeDTO updateEmployee( Long id, EmployeeRequestDTO employeeRequestDTO )
     {
         EmployeeModel employeeModel = employeeRepository.findById( id )
             .orElseThrow( () -> new RuntimeException( "Funcionário não encontrado" ) );
@@ -50,7 +49,7 @@ public class EmployeeService
         return EmployeeDTO.from( employeeModelUpdate );
     }
 
-    public void deleteEmployeeById( UUID id )
+    public void deleteEmployeeById( Long id )
     {
         employeeRepository.deleteById( id );
     }

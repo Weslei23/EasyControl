@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record MaintenanceDTO(
-        UUID id,
+        Long id,
         LocalDate scheduledDate,
         StatusModel status,
         TypeMaterialModel typeMaterial,
         String descriptionService,
-        UUID customerId,
+        Long customerId,
         String customerName,
-        UUID employeeId,
+        Long employeeId,
         String employeeName,
         LocalDateTime createdAt
 ) {

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping( "/api/v1/maintenances" )
@@ -27,7 +26,7 @@ public class MaintenanceController
     }
 
     @GetMapping( "/{id}" )
-    public ResponseEntity<MaintenanceDTO> getMaintenanceById( @PathVariable UUID id )
+    public ResponseEntity<MaintenanceDTO> getMaintenanceById( @PathVariable Long id )
     {
         MaintenanceDTO dto = maintenanceService.getMaintenanceById( id );
         return ResponseEntity.ok( dto );
@@ -41,14 +40,14 @@ public class MaintenanceController
     }
 
     @PutMapping( "/update/{id}" )
-    public ResponseEntity<MaintenanceDTO> updateMaintenance( @PathVariable UUID id, @Valid @RequestBody MaintenanceRequestDTO dto )
+    public ResponseEntity<MaintenanceDTO> updateMaintenance( @PathVariable Long id, @Valid @RequestBody MaintenanceRequestDTO dto )
     {
         MaintenanceDTO updated = maintenanceService.updateMaintenance( id, dto );
         return ResponseEntity.ok( updated );
     }
 
     @DeleteMapping( "/delete/{id}" )
-    public ResponseEntity<Void> deleteMaintenance( @PathVariable UUID id )
+    public ResponseEntity<Void> deleteMaintenance( @PathVariable Long id )
     {
         maintenanceService.deleteMaintenance( id );
         return ResponseEntity.noContent().build();

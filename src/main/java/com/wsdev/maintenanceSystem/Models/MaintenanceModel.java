@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table( name = "tb_maintenances" )
@@ -20,8 +19,8 @@ import java.util.UUID;
 public class MaintenanceModel
 {
     @Id
-    @GeneratedValue( strategy = GenerationType.UUID )
-    private UUID id;
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
+    private Long id;
 
     @NotNull( message = "A data de execução é obrigatória" )
     private LocalDate scheduledDate;
