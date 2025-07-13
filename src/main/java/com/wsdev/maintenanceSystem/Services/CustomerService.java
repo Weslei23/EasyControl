@@ -20,6 +20,20 @@ public class CustomerService
             .map( CustomerDTO::from ).toList();
     }
 
+    public CustomerDTO getCustomerByName( String name )
+    {
+        CustomerModel customerModel = customerRepository.findByName( name )
+                .orElseThrow( () -> new RuntimeException( "Cliente não encontrado por este nome!" ) );
+        return CustomerDTO.from( customerModel );
+    }
+
+    public CustomerDTO getCustomerByEmail( String email )
+    {
+        CustomerModel customerModel = customerRepository.findByEmail( email )
+                .orElseThrow( () -> new RuntimeException( "Cliente não encontrado por este email!" ) );
+        return CustomerDTO.from( customerModel );
+    }
+
     public CustomerDTO getCustomerById( Long id )
     {
         CustomerModel customerModel = customerRepository.findById( id )

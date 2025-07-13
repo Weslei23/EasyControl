@@ -31,6 +31,18 @@ public class CustomerController
         return ResponseEntity.ok( customerService.getCustomerById( id ) );
     }
 
+    @GetMapping( "/findByName/{name}" )
+    public ResponseEntity<CustomerDTO> getCustomerByName( @PathVariable String name )
+    {
+        return ResponseEntity.ok( customerService.getCustomerByName( name ) );
+    }
+
+    @GetMapping( "/findByEmail/{email}" )
+    public ResponseEntity<CustomerDTO> getCustomerByEmail( @PathVariable String email )
+    {
+        return ResponseEntity.ok( customerService.getCustomerByEmail( email ) );
+    }
+
     @PostMapping( "/add" )
     public ResponseEntity<CustomerDTO> addCustomer( @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
     {

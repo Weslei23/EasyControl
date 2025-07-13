@@ -24,6 +24,12 @@ public class EmployeeController
         return ResponseEntity.ok( employeeService.getEmployees() );
     }
 
+    @GetMapping( "/findByName/{name}" )
+    public ResponseEntity<EmployeeDTO> getEmployeeByName( @PathVariable String name )
+    {
+        return ResponseEntity.ok( employeeService.getEmployeeByName( name ) );
+    }
+
     @GetMapping( "/{id}" )
     public ResponseEntity<EmployeeDTO> getEmployeeById( @PathVariable Long id )
     {

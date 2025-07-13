@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@RequestMapping( "/api/pdf" )
+@RequestMapping( "/api/v1/pdf" )
 @AllArgsConstructor
 public class PdfCreatorController
 {
     @Autowired
     private final PdfCreator pdfService;
 
-    @PostMapping( "/manutencao" )
+    @PostMapping( "/maintenance" )
     public ResponseEntity<byte[]> gerarPdf( @RequestBody MaintenanceDTO dto ) throws IOException
     {
         try

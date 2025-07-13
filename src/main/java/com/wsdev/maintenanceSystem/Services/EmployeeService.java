@@ -20,6 +20,13 @@ public class EmployeeService
             .map( EmployeeDTO::from ).toList();
     }
 
+    public EmployeeDTO getEmployeeByName( String name )
+    {
+        EmployeeModel employeeModel = employeeRepository.findByName( name )
+                .orElseThrow( () -> new RuntimeException( "Funcionário não encontrado por este nome!" ) );
+        return EmployeeDTO.from( employeeModel );
+    }
+
     public EmployeeDTO getEmployeeById( Long id )
     {
         EmployeeModel employeeModel = employeeRepository.findById( id )
