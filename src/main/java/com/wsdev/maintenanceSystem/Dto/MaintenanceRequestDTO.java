@@ -4,7 +4,6 @@ import com.wsdev.maintenanceSystem.Models.StatusModel;
 import com.wsdev.maintenanceSystem.Models.TypeMaterialModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDate;
 
 public record MaintenanceRequestDTO(

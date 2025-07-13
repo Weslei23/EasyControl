@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
 
 @RestController
@@ -17,7 +16,7 @@ public class PdfCreatorController
     @Autowired
     private final PdfCreator pdfService;
 
-    @PostMapping("/manutencao")
+    @PostMapping( "/manutencao" )
     public ResponseEntity<byte[]> gerarPdf( @RequestBody MaintenanceDTO dto ) throws IOException
     {
         try

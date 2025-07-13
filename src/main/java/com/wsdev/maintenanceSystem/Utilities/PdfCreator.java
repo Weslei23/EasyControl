@@ -7,7 +7,6 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.stereotype.Service;
-
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

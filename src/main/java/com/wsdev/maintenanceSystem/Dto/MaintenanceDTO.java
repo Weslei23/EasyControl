@@ -1,10 +1,8 @@
 package com.wsdev.maintenanceSystem.Dto;
 
 import com.wsdev.maintenanceSystem.Models.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public record MaintenanceDTO(
         Long id,

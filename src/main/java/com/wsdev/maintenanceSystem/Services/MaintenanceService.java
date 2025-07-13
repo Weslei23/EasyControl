@@ -8,16 +8,17 @@ import com.wsdev.maintenanceSystem.Repository.EmployeeRepository;
 import com.wsdev.maintenanceSystem.Repository.MaintenanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class MaintenanceService
 {
-    @Autowired private MaintenanceRepository maintenanceRepository;
-    @Autowired private CustomerRepository customerRepository;
-    @Autowired private EmployeeRepository employeeRepository;
+    @Autowired
+    private MaintenanceRepository maintenanceRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public List<MaintenanceDTO> getMaintenances()
     {

@@ -6,7 +6,6 @@ import com.wsdev.maintenanceSystem.Models.CustomerModel;
 import com.wsdev.maintenanceSystem.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

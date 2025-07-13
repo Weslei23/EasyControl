@@ -28,7 +28,6 @@ public record EmployeeDTO( Long id, String name, String telephone, String specia
         employeeModel.setMaintenances( Optional.ofNullable( maintenances )
             .orElse( List.of() ).stream().map( MaintenanceDTO::toEntity ).toList() );
 
-
         return employeeModel;
     }
 }
