@@ -48,8 +48,6 @@ public class EmployeeService
         employeeModel.setName( employeeRequestDTO.name() );
         employeeModel.setTelephone( employeeRequestDTO.telephone() );
         employeeModel.setSpecialty( employeeRequestDTO.specialty() );
-//        employeeModel.setMaintenances( employeeRequestDTO.maintenances().stream().map( MaintenanceDTO::toEntity).toList() );
-
         EmployeeModel employeeModelUpdate = employeeRepository.save( employeeModel );
 
         return EmployeeDTO.from( employeeModelUpdate );

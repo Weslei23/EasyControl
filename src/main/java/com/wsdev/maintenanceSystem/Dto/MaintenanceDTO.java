@@ -14,8 +14,8 @@ public record MaintenanceDTO(
         String customerName,
         Long employeeId,
         String employeeName,
-        LocalDateTime createdAt
-) {
+        LocalDateTime createdAt )
+{
     public static MaintenanceDTO from( MaintenanceModel model )
     {
         return new MaintenanceDTO(

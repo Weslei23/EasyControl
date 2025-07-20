@@ -30,14 +30,14 @@ public class CustomerService
     public CustomerDTO getCustomerByEmail( String email )
     {
         CustomerModel customerModel = customerRepository.findByEmail( email )
-                .orElseThrow( () -> new RuntimeException( "Cliente não encontrado por este email!" ) );
+                .orElseThrow( () -> new RuntimeException( "Cliente não encontrado por este email." ) );
         return CustomerDTO.from( customerModel );
     }
 
     public CustomerDTO getCustomerById( Long id )
     {
         CustomerModel customerModel = customerRepository.findById( id )
-            .orElseThrow( () -> new RuntimeException( "Cliente não encontrado" ) );
+            .orElseThrow( () -> new RuntimeException( "Cliente não encontrado por este id." ) );
         return CustomerDTO.from( customerModel );
     }
 

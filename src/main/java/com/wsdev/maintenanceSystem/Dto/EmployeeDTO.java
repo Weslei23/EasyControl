@@ -5,7 +5,12 @@ import com.wsdev.maintenanceSystem.Models.EmployeeModel;
 import java.util.List;
 import java.util.Optional;
 
-public record EmployeeDTO( Long id, String name, String telephone, String specialty, List<MaintenanceDTO> maintenances )
+public record EmployeeDTO(
+        Long id,
+        String name,
+        String telephone,
+        String specialty,
+        List<MaintenanceDTO> maintenances )
 {
     public static EmployeeDTO from( EmployeeModel employeeModel )
     {

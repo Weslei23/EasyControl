@@ -25,4 +25,7 @@ public record MaintenanceRequestDTO(
 
         @NotNull( message = "O ID do funcionário é obrigatório" )
         Long employeeId
-) {}
+)
+{
+        
+}

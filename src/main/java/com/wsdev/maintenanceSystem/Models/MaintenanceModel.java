@@ -21,18 +21,22 @@ public class MaintenanceModel
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
-    @NotNull( message = "A data de execução é obrigatória" )
+    @NotBlank( message = "A data de execução é obrigatória." )
+    @Column( nullable = false )
     private LocalDate scheduledDate;
 
-    @NotNull( message = "O status de execução é obrigatório" )
+    @NotBlank( message = "O status de execução é obrigatório." )
+    @Column( nullable = false )
     @Enumerated( EnumType.STRING )
     private StatusModel status;
 
-    @NotNull( message = "O tipo de material é obrigatório" )
+    @NotBlank( message = "O tipo de material é obrigatório." )
+    @Column( nullable = false )
     @Enumerated( EnumType.STRING )
     private TypeMaterialModel typeMaterial;
 
-    @NotBlank( message = "A descrição é obrigatória" )
+    @NotBlank( message = "A descrição é obrigatória." )
+    @Column( nullable = false )
     private String descriptionService;
 
     @ManyToOne

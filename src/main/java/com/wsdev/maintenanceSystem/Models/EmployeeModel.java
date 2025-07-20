@@ -3,6 +3,7 @@ package com.wsdev.maintenanceSystem.Models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
@@ -23,13 +24,19 @@ public class EmployeeModel
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
-    @NotBlank( message = "O nome é obrigatório" )
+    @NotBlank( message = "O nome é obrigatório." )
+    @Column( nullable = false )
+    @Size(max = 50 )
     private String name;
 
-    @NotBlank( message = "O telefone é obrigatório" )
-    @Pattern( regexp = "^(\\(\\d{2}\\)\\s?|\\d{2})\\d{4,5}-?\\d{4}$", message = "Telefone inválido. Use o formato (11) 91234-5678 ou 11912345678" )
+    @NotBlank( message = "O telefone é obrigatório." )
+    @Column( nullable = false )
+    @Pattern( regexp = "^(\\(\\d{2}\\)\\s?|\\d{2})\\d{4,5}-?\\d{4}$", message = "Telefone inválido. Use o formato (11) 91234-5678 ou 11912345678." )
     private String telephone;
 
+    @NotBlank( message = "Adicione uma especialidade." )
+    @Size( max = 40 )
+    @Column( nullable = false )
     private String specialty;
 
     @OneToMany( mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true )

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Controller
@@ -22,13 +23,27 @@ public class CustomerController
     @GetMapping( )
     public ResponseEntity<List<CustomerDTO>> getCustomers()
     {
-        return ResponseEntity.ok( customerService.getCustomers() );
+       try
+       {
+           return ResponseEntity.ok( customerService.getCustomers() );
+       }
+       catch ( Exception e )
+       {
+           return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( null );
+       }
     }
 
     @GetMapping( "/{id}" )
     public ResponseEntity<CustomerDTO> getCustomerById( @PathVariable Long id )
     {
-        return ResponseEntity.ok( customerService.getCustomerById( id ) );
+        try
+        {
+            return ResponseEntity.ok( customerService.getCustomerById( id ) );
+        }
+        catch ( Exception e )
+        {
+            return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( null );
+        }
     }
 
     @GetMapping( "/findByName/{name}" )
