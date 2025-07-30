@@ -2,6 +2,7 @@ package com.wsdev.maintenanceSystem.Services;
 
 import com.wsdev.maintenanceSystem.Dto.CustomerDTO;
 import com.wsdev.maintenanceSystem.Dto.CustomerRequestDTO;
+import com.wsdev.maintenanceSystem.Exception.CustomerNotFoundException;
 import com.wsdev.maintenanceSystem.Models.CustomerModel;
 import com.wsdev.maintenanceSystem.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +24,21 @@ public class CustomerService
     public CustomerDTO getCustomerByName( String name )
     {
         CustomerModel customerModel = customerRepository.findByName( name )
-                .orElseThrow( () -> new RuntimeException( "Cliente não encontrado por este nome!" ) );
+                .orElseThrow( CustomerNotFoundException::new );
         return CustomerDTO.from( customerModel );
     }
 
     public CustomerDTO getCustomerByEmail( String email )
     {
         CustomerModel customerModel = customerRepository.findByEmail( email )
-                .orElseThrow( () -> new RuntimeException( "Cliente não encontrado por este email." ) );
+                .orElseThrow( CustomerNotFoundException::new );
         return CustomerDTO.from( customerModel );
     }
 
     public CustomerDTO getCustomerById( Long id )
     {
         CustomerModel customerModel = customerRepository.findById( id )
-            .orElseThrow( () -> new RuntimeException( "Cliente não encontrado por este id." ) );
+            .orElseThrow( CustomerNotFoundException::new );
         return CustomerDTO.from( customerModel );
     }
 
@@ -50,7 +51,7 @@ public class CustomerService
     public CustomerDTO updateCustomer( Long id, CustomerRequestDTO customerRequestDTO )
     {
         CustomerModel customerModel = customerRepository.findById( id )
-            .orElseThrow( () -> new RuntimeException( "Cliente não encontrado") );
+            .orElseThrow( CustomerNotFoundException::new );
 
         customerModel.setName( customerRequestDTO.name() );
         customerModel.setTelephone( customerRequestDTO.telephone() );

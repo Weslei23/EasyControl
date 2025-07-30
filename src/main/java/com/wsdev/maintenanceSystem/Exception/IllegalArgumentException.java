@@ -8,9 +8,4 @@ public class IllegalArgumentException extends RuntimeException
     {
         super( "Customer not found for id " + id );
     }
-
-    public IllegalArgumentException( String name )
-    {
-        super( "Argument 'name' must not be null" );
-    }
 }

@@ -27,7 +27,7 @@ public class CustomerController
        {
            return ResponseEntity.ok( customerService.getCustomers() );
        }
-       catch ( Exception e )
+       catch ( Exception exception )
        {
            return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( null );
        }
@@ -36,14 +36,7 @@ public class CustomerController
     @GetMapping( "/{id}" )
     public ResponseEntity<CustomerDTO> getCustomerById( @PathVariable Long id )
     {
-        try
-        {
-            return ResponseEntity.ok( customerService.getCustomerById( id ) );
-        }
-        catch ( Exception e )
-        {
-            return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( null );
-        }
+        return ResponseEntity.ok( customerService.getCustomerById( id ) );
     }
 
     @GetMapping( "/findByName/{name}" )
@@ -55,7 +48,7 @@ public class CustomerController
     @GetMapping( "/findByEmail/{email}" )
     public ResponseEntity<CustomerDTO> getCustomerByEmail( @PathVariable String email )
     {
-        return ResponseEntity.ok( customerService.getCustomerByEmail( email ) );
+         return ResponseEntity.ok( customerService.getCustomerByEmail( email ) );
     }
 
     @PostMapping( "/add" )
