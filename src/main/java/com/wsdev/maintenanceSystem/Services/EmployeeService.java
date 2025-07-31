@@ -2,6 +2,7 @@ package com.wsdev.maintenanceSystem.Services;
 
 import com.wsdev.maintenanceSystem.Dto.EmployeeDTO;
 import com.wsdev.maintenanceSystem.Dto.EmployeeRequestDTO;
+import com.wsdev.maintenanceSystem.Exception.EmployeeNotFoundException;
 import com.wsdev.maintenanceSystem.Models.EmployeeModel;
 import com.wsdev.maintenanceSystem.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,14 @@ public class EmployeeService
     public EmployeeDTO getEmployeeByName( String name )
     {
         EmployeeModel employeeModel = employeeRepository.findByName( name )
-                .orElseThrow( () -> new RuntimeException( "Funcionário não encontrado por este nome!" ) );
+                .orElseThrow( EmployeeNotFoundException::new );
         return EmployeeDTO.from( employeeModel );
     }
 
     public EmployeeDTO getEmployeeById( Long id )
     {
         EmployeeModel employeeModel = employeeRepository.findById( id )
-            .orElseThrow( () -> new RuntimeException( "Funcionário não encontrado" ) );
+            .orElseThrow( EmployeeNotFoundException::new );
         return EmployeeDTO.from( employeeModel );
     }
 
@@ -43,7 +44,7 @@ public class EmployeeService
     public EmployeeDTO updateEmployee( Long id, EmployeeRequestDTO employeeRequestDTO )
     {
         EmployeeModel employeeModel = employeeRepository.findById( id )
-            .orElseThrow( () -> new RuntimeException( "Funcionário não encontrado" ) );
+            .orElseThrow( EmployeeNotFoundException::new );
 
         employeeModel.setName( employeeRequestDTO.name() );
         employeeModel.setTelephone( employeeRequestDTO.telephone() );

@@ -1,6 +1,7 @@
 package com.wsdev.maintenanceSystem.Services;
 
 import com.wsdev.maintenanceSystem.Dto.UserDTO;
+import com.wsdev.maintenanceSystem.Exception.UserNotFoundException;
 import com.wsdev.maintenanceSystem.Models.UserModel;
 import com.wsdev.maintenanceSystem.Repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class UserService
     public UserDTO getUserByUsername( String username )
     {
         UserModel userModel = userRepository.getUserByUsername( username )
-                .orElseThrow( () -> new RuntimeException( "Nenhum usuario encontrado com o username " + username ) );
+                .orElseThrow( UserNotFoundException::new );
 
         return UserDTO.from( userModel );
     }
@@ -33,7 +34,7 @@ public class UserService
     public UserDTO getUserByName( String name )
     {
         UserModel userModel = userRepository.getUserByName( name )
-                .orElseThrow( () -> new RuntimeException( "Nenhum usuário encontrado com este nome." ) );
+                .orElseThrow( UserNotFoundException::new );
 
         return UserDTO.from( userModel );
     }
@@ -41,14 +42,14 @@ public class UserService
     public UserDTO getUserByEmail( String email )
     {
         UserModel userModel = userRepository.getUserByEmail( email )
-                .orElseThrow( () -> new RuntimeException( "Nenhum usuário encontrado com este email." ) );
+                .orElseThrow( UserNotFoundException::new );
         return UserDTO.from( userModel );
     }
 
     public UserDTO getUserById( Long id )
     {
         UserModel userModel = userRepository.findById( id )
-                .orElseThrow( () -> new  RuntimeException( "Nenhum usuário encontrado com este id." ) );
+                .orElseThrow( UserNotFoundException::new );
         return UserDTO.from(  userModel );
     }
 
@@ -61,7 +62,7 @@ public class UserService
     public UserDTO updateUser( Long id, UserDTO userDTO )
     {
         UserModel userModel = userRepository.findById( id )
-                .orElseThrow( () -> new RuntimeException( "Nenhum usuário encontrado com este id." ) );
+                .orElseThrow( UserNotFoundException::new );
 
         userModel.setId( userDTO.id() );
         userModel.setName( userDTO.name() );

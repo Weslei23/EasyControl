@@ -2,6 +2,9 @@ package com.wsdev.maintenanceSystem.Services;
 
 import com.wsdev.maintenanceSystem.Dto.MaintenanceDTO;
 import com.wsdev.maintenanceSystem.Dto.MaintenanceRequestDTO;
+import com.wsdev.maintenanceSystem.Exception.CustomerNotFoundException;
+import com.wsdev.maintenanceSystem.Exception.EmployeeNotFoundException;
+import com.wsdev.maintenanceSystem.Exception.MaintenanceNotFoundException;
 import com.wsdev.maintenanceSystem.Models.*;
 import com.wsdev.maintenanceSystem.Repository.CustomerRepository;
 import com.wsdev.maintenanceSystem.Repository.EmployeeRepository;
@@ -29,17 +32,17 @@ public class MaintenanceService
     public MaintenanceDTO getMaintenanceById( Long id )
     {
         MaintenanceModel maintenance = maintenanceRepository.findById( id )
-            .orElseThrow( () -> new RuntimeException( "Manutenção não encontrada" ) );
+            .orElseThrow( MaintenanceNotFoundException::new );
         return MaintenanceDTO.from( maintenance );
     }
 
     public MaintenanceDTO addMaintenance( MaintenanceRequestDTO dto )
     {
         CustomerModel customer = customerRepository.findById( dto.customerId() )
-            .orElseThrow( () -> new RuntimeException( "Cliente não encontrado") );
+            .orElseThrow( CustomerNotFoundException::new );
 
         EmployeeModel employee = employeeRepository.findById( dto.employeeId() )
-            .orElseThrow( () -> new RuntimeException( "Funcionário não encontrado" ) );
+            .orElseThrow( EmployeeNotFoundException::new );
 
         MaintenanceModel maintenance = new MaintenanceModel();
         populateFromDTO( maintenance, dto, customer, employee );
@@ -51,13 +54,13 @@ public class MaintenanceService
     public MaintenanceDTO updateMaintenance( Long id, MaintenanceRequestDTO dto )
     {
         MaintenanceModel maintenance = maintenanceRepository.findById( id )
-            .orElseThrow( () -> new RuntimeException( "Manutenção não encontrada" ) );
+            .orElseThrow( MaintenanceNotFoundException::new );
 
         CustomerModel customer = customerRepository.findById( dto.customerId() )
-            .orElseThrow( () -> new RuntimeException( "Cliente não encontrado" ) );
+            .orElseThrow( CustomerNotFoundException::new );
 
         EmployeeModel employee = employeeRepository.findById( dto.employeeId() )
-            .orElseThrow( () -> new RuntimeException( "Funcionário não encontrado" ) );
+            .orElseThrow( EmployeeNotFoundException::new );
 
         populateFromDTO( maintenance, dto, customer, employee );
 
@@ -69,7 +72,7 @@ public class MaintenanceService
     {
         if ( !maintenanceRepository.existsById( id ) )
         {
-            throw new RuntimeException( "Manutenção não encontrada" );
+            throw new MaintenanceNotFoundException();
         }
         maintenanceRepository.deleteById( id );
     }
