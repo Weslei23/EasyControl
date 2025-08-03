@@ -2,6 +2,7 @@ package com.wsdev.maintenanceSystem.Dto;
 
 import com.wsdev.maintenanceSystem.Models.CustomerModel;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +12,8 @@ public record CustomerDTO(
         String telephone,
         String email,
         AddressDTO address,
-        List<MaintenanceDTO> maintenances )
+        List<MaintenanceDTO> maintenances,
+        LocalDateTime createdAt )
 {
     public static CustomerDTO from( CustomerModel customerModel )
     {
@@ -22,7 +24,8 @@ public record CustomerDTO(
         customerModel.getEmail(),
         AddressDTO.from( customerModel.getAddress() ),
         Optional.ofNullable( customerModel.getMaintenances() )
-                .orElse( List.of() ).stream().map( MaintenanceDTO::from ).toList() );
+                .orElse( List.of() ).stream().map( MaintenanceDTO::from ).toList(),
+        customerModel.getCreatedAt() );
     }
 
     public CustomerModel toEntity()
@@ -36,6 +39,7 @@ public record CustomerDTO(
                 .map( AddressDTO::toEntity ).orElse( null ) );
         customerModel.setMaintenances( Optional.ofNullable( maintenances )
             .orElse( List.of() ).stream().map( MaintenanceDTO::toEntity ).toList() );
+        customerModel.setCreatedAt( createdAt );
 
         return customerModel;
     }
