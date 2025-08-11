@@ -1,11 +1,15 @@
 package com.wsdev.maintenanceSystem.Services;
 
 import com.wsdev.maintenanceSystem.Dto.UserDTO;
+import com.wsdev.maintenanceSystem.Exception.UserAlreadyRegisteredException;
 import com.wsdev.maintenanceSystem.Exception.UserNotFoundException;
 import com.wsdev.maintenanceSystem.Models.UserModel;
 import com.wsdev.maintenanceSystem.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,6 +59,11 @@ public class UserService
 
     public UserDTO addUser( UserDTO userDTO )
     {
+        var teste = getUserByEmail( userDTO.email() );
+        if ( teste != null )
+        {
+            throw new UserAlreadyRegisteredException();
+        }
         UserModel userModel = userRepository.save( userDTO.toEntity() );
         return UserDTO.from( userModel );
     }
