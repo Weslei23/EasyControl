@@ -22,39 +22,65 @@ public class MaintenanceController
     @GetMapping( )
     public ResponseEntity<List<MaintenanceDTO>> getMaintenances()
     {
-        List<MaintenanceDTO> list = maintenanceService.getMaintenances();
-        return ResponseEntity.ok( list );
+        return ResponseEntity.ok( maintenanceService.getMaintenances() );
     }
 
     @Operation( description = "Irá buscar uma manutenção pelo 'ID' informado." )
     @GetMapping( "/{id}" )
     public ResponseEntity<MaintenanceDTO> getMaintenanceById( @PathVariable Long id )
     {
-        MaintenanceDTO dto = maintenanceService.getMaintenanceById( id );
-        return ResponseEntity.ok( dto );
+        try
+        {
+            return ResponseEntity.ok( maintenanceService.getMaintenanceById( id ) );
+        }
+        catch ( Exception exception )
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation( description = "Irá adicionar uma manutenção ao sistema." )
     @PostMapping( "/add" )
-    public ResponseEntity<MaintenanceDTO> addMaintenance( @Valid @RequestBody MaintenanceRequestDTO dto )
+    public ResponseEntity<String> addMaintenance( @Valid @RequestBody MaintenanceRequestDTO dto )
     {
-        MaintenanceDTO created = maintenanceService.addMaintenance( dto );
-        return ResponseEntity.ok( created );
+        try
+        {
+            maintenanceService.addMaintenance( dto );
+            return ResponseEntity.ok( "Maintenance succesfully added." );
+        }
+        catch( Exception exception )
+        {
+            return ResponseEntity.badRequest().body( exception.getMessage() );
+        }
     }
 
     @Operation( description = "Irá atualizar uma manutenção a partir do 'ID' informado." )
     @PutMapping( "/update/{id}" )
-    public ResponseEntity<MaintenanceDTO> updateMaintenance( @PathVariable Long id, @Valid @RequestBody MaintenanceRequestDTO dto )
+    public ResponseEntity<String> updateMaintenance( @PathVariable Long id, @Valid @RequestBody MaintenanceRequestDTO dto )
     {
-        MaintenanceDTO updated = maintenanceService.updateMaintenance( id, dto );
-        return ResponseEntity.ok( updated );
+        try
+        {
+            maintenanceService.updateMaintenance( id, dto );
+            return ResponseEntity.ok( "Maintenance successfully updated" );
+        }
+        catch( Exception exception )
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation( description = "Irá deletar uma manutenção a partir do 'ID' informado." )
     @DeleteMapping( "/delete/{id}" )
     public ResponseEntity<Void> deleteMaintenance( @PathVariable Long id )
     {
-        maintenanceService.deleteMaintenance( id );
-        return ResponseEntity.noContent().build();
+        try
+        {
+            maintenanceService.deleteMaintenance( id );
+            return ResponseEntity.noContent().build();
+        }
+        catch( Exception exception )
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

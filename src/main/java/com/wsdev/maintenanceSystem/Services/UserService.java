@@ -59,11 +59,6 @@ public class UserService
 
     public UserDTO addUser( UserDTO userDTO )
     {
-        var teste = getUserByEmail( userDTO.email() );
-        if ( teste != null )
-        {
-            throw new UserAlreadyRegisteredException();
-        }
         UserModel userModel = userRepository.save( userDTO.toEntity() );
         return UserDTO.from( userModel );
     }

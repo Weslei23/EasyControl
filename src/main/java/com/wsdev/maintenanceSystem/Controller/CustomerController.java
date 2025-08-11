@@ -6,9 +6,7 @@ import com.wsdev.maintenanceSystem.Services.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,57 +23,94 @@ public class CustomerController
     @GetMapping( )
     public ResponseEntity<List<CustomerDTO>> getCustomers()
     {
-       try
-       {
-           return ResponseEntity.ok( customerService.getCustomers() );
-       }
-       catch ( Exception exception )
-       {
-           return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( null );
-       }
+       return ResponseEntity.ok( customerService.getCustomers() );
     }
 
     @Operation( description = "Irá buscar um usuário pelo 'ID' informado." )
     @GetMapping( "/{id}" )
     public ResponseEntity<CustomerDTO> getCustomerById( @PathVariable Long id )
     {
-        return ResponseEntity.ok( customerService.getCustomerById( id ) );
+        try
+        {
+            return ResponseEntity.ok( customerService.getCustomerById( id ) );
+        }
+        catch ( Exception exception )
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation( description = "Irá buscar um cliente pelo 'Nome' informado." )
     @GetMapping( "/findByName/{name}" )
     public ResponseEntity<CustomerDTO> getCustomerByName( @PathVariable String name )
     {
-        return ResponseEntity.ok( customerService.getCustomerByName( name ) );
+        try
+        {
+            return ResponseEntity.ok( customerService.getCustomerByName( name ) );
+        }
+        catch ( Exception exception )
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation( description = "Irá buscar um usuário pelo 'Email' informado." )
     @GetMapping( "/findByEmail/{email}" )
     public ResponseEntity<CustomerDTO> getCustomerByEmail( @PathVariable String email )
     {
-         return ResponseEntity.ok( customerService.getCustomerByEmail( email ) );
+        try
+        {
+            return ResponseEntity.ok( customerService.getCustomerByEmail( email ) );
+        }
+        catch ( Exception exception )
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation( description = "Irá adicionar um cliente ao sistema." )
     @PostMapping( "/add" )
-    public ResponseEntity<CustomerDTO> addCustomer( @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
+    public ResponseEntity<String> addCustomer( @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
     {
-        CustomerDTO customerDTO = customerService.addCustomer( customerRequestDTO );
-        return new ResponseEntity<>( customerDTO, HttpStatus.CREATED );
+        try
+        {
+            customerService.addCustomer( customerRequestDTO );
+            return ResponseEntity.ok( "Customer successfully added." );
+        }
+        catch ( Exception exception )
+        {
+            return ResponseEntity.badRequest().body( exception.getMessage() );
+        }
+
     }
 
     @Operation( description = "Irá atualizar um cliente a partir do 'ID' informado." )
     @PutMapping("/update/{id}" )
-    public ResponseEntity<CustomerDTO> updateCustomer( @PathVariable Long id, @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
+    public ResponseEntity<String> updateCustomer( @PathVariable Long id, @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
     {
-        return ResponseEntity.ok( customerService.updateCustomer( id, customerRequestDTO ) );
+        try
+        {
+            customerService.updateCustomer( id, customerRequestDTO );
+            return ResponseEntity.ok( "Customer successfully updated." );
+        }
+        catch ( Exception exception )
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation( description = "Irá deletar um cliente a partir do 'ID' informado." )
     @DeleteMapping( "/delete/{id}" )
     public ResponseEntity<Void> deleteCustomer( @PathVariable Long id )
     {
-        customerService.deleteCustomerById( id );
-        return ResponseEntity.noContent().build();
+        try
+        {
+            customerService.deleteCustomerById( id );
+            return ResponseEntity.noContent().build();
+        }
+        catch ( Exception exception )
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
