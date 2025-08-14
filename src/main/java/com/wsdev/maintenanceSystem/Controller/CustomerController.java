@@ -6,6 +6,7 @@ import com.wsdev.maintenanceSystem.Services.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,11 +33,12 @@ public class CustomerController
     {
         try
         {
-            return ResponseEntity.ok( customerService.getCustomerById( id ) );
+            CustomerDTO customerDTO = customerService.getCustomerById( id );
+            return customerDTO != null ? ResponseEntity.ok( customerDTO ) : ResponseEntity.notFound().build();
         }
         catch ( Exception exception )
         {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -46,11 +48,12 @@ public class CustomerController
     {
         try
         {
-            return ResponseEntity.ok( customerService.getCustomerByName( name ) );
+            CustomerDTO customerDTO = customerService.getCustomerByName( name );
+            return customerDTO != null ? ResponseEntity.ok( customerDTO ) : ResponseEntity.notFound().build();
         }
         catch ( Exception exception )
         {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -60,11 +63,12 @@ public class CustomerController
     {
         try
         {
-            return ResponseEntity.ok( customerService.getCustomerByEmail( email ) );
+            CustomerDTO customerDTO = customerService.getCustomerByEmail( email );
+            return customerDTO != null ? ResponseEntity.ok( customerDTO ) : ResponseEntity.notFound().build();
         }
         catch ( Exception exception )
         {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -75,7 +79,7 @@ public class CustomerController
         try
         {
             customerService.addCustomer( customerRequestDTO );
-            return ResponseEntity.ok( "Customer successfully added." );
+            return ResponseEntity.status( HttpStatus.CREATED ).body( "Customer successfully added." );
         }
         catch ( Exception exception )
         {
@@ -86,16 +90,16 @@ public class CustomerController
 
     @Operation( description = "Irá atualizar um cliente a partir do 'ID' informado." )
     @PutMapping("/update/{id}" )
-    public ResponseEntity<String> updateCustomer( @PathVariable Long id, @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
+    public ResponseEntity<?> updateCustomer( @PathVariable Long id, @RequestBody @Valid CustomerRequestDTO customerRequestDTO )
     {
         try
         {
-            customerService.updateCustomer( id, customerRequestDTO );
-            return ResponseEntity.ok( "Customer successfully updated." );
+            CustomerDTO customerDTO = customerService.updateCustomer( id, customerRequestDTO );
+            return customerDTO != null ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
         }
         catch ( Exception exception )
         {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -105,7 +109,7 @@ public class CustomerController
     {
         try
         {
-            customerService.deleteCustomerById( id );
+           customerService.deleteCustomerById( id );
             return ResponseEntity.noContent().build();
         }
         catch ( Exception exception )

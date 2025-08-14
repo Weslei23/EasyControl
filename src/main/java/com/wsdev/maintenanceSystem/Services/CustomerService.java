@@ -2,6 +2,7 @@ package com.wsdev.maintenanceSystem.Services;
 
 import com.wsdev.maintenanceSystem.Dto.CustomerDTO;
 import com.wsdev.maintenanceSystem.Dto.CustomerRequestDTO;
+import com.wsdev.maintenanceSystem.Exception.CustomerExistsException;
 import com.wsdev.maintenanceSystem.Exception.CustomerNotFoundException;
 import com.wsdev.maintenanceSystem.Models.CustomerModel;
 import com.wsdev.maintenanceSystem.Repository.CustomerRepository;
@@ -44,6 +45,11 @@ public class CustomerService
 
     public CustomerDTO addCustomer( CustomerRequestDTO customerRequestDTO )
     {
+        if( customerRepository.existsByEmail( customerRequestDTO.email() ) )
+        {
+            throw new CustomerExistsException( "Customer already exists" );
+        }
+
         CustomerModel customerModel = customerRepository.save( customerRequestDTO.toEntity() );
         return CustomerDTO.from( customerModel );
     }

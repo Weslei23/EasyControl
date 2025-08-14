@@ -1,6 +1,8 @@
 package com.wsdev.maintenanceSystem.Controller;
 
+import com.wsdev.maintenanceSystem.Dto.LoginRequestDTO;
 import com.wsdev.maintenanceSystem.Dto.UserDTO;
+import com.wsdev.maintenanceSystem.Dto.RegisterRequestDTO;
 import com.wsdev.maintenanceSystem.Services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -36,7 +38,7 @@ public class UserController
         {
             return ResponseEntity.ok( userService.getUserById( id ) );
         }
-        catch ( Exception exception )
+        catch ( RuntimeException exception )
         {
             return ResponseEntity.notFound().build();
         }
@@ -84,21 +86,21 @@ public class UserController
         }
     }
 
-    @Operation( description = "Irá adicionar um usuário ao sistema." )
-    @PostMapping( "/add" )
-    public ResponseEntity<String> addUser( @RequestBody @Valid UserDTO userDTO )
-    {
-        try
-        {
-            userService.addUser( userDTO );
-            return ResponseEntity.ok( "User succesfully added" );
-        }
-        catch ( Exception exception )
-        {
-            return ResponseEntity.badRequest().build();
-        }
-
-    }
+//    @Operation( description = "Irá adicionar um usuário ao sistema." )
+//    @PostMapping( "/add" )
+//    public ResponseEntity<String> addUser( @RequestBody @Valid UserDTO userDTO )
+//    {
+//        try
+//        {
+//            userService.addUser( userDTO );
+//            return ResponseEntity.ok( "User succesfully added" );
+//        }
+//        catch ( Exception exception )
+//        {
+//            return ResponseEntity.badRequest().build();
+//        }
+//
+//    }
 
     @Operation( description = "Irá atualizar um usuário a partir do 'ID' informado." )
     @PutMapping( "/update/{id}" )
@@ -127,6 +129,22 @@ public class UserController
         catch ( Exception exception )
         {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterRequestDTO registerDTO) {
+        userService.registerUser(registerDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User successfully registered");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDTO loginDTO) {
+        boolean authenticated = userService.authenticate(loginDTO);
+        if (authenticated) {
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
 }
