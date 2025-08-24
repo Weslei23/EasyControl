@@ -1,9 +1,9 @@
 package com.wsdev.maintenanceSystem.Config;
 
-import com.wsdev.maintenanceSystem.Models.Role;
-import com.wsdev.maintenanceSystem.Models.UserModel;
-import com.wsdev.maintenanceSystem.Repository.RoleRepository;
-import com.wsdev.maintenanceSystem.Repository.UserRepository;
+import com.wsdev.maintenanceSystem.Database.Models.Role;
+import com.wsdev.maintenanceSystem.Database.Models.UserModel;
+import com.wsdev.maintenanceSystem.Database.Repository.RoleRepository;
+import com.wsdev.maintenanceSystem.Database.Repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

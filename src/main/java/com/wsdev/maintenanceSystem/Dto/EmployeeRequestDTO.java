@@ -1,6 +1,6 @@
 package com.wsdev.maintenanceSystem.Dto;
 
-import com.wsdev.maintenanceSystem.Models.EmployeeModel;
+import com.wsdev.maintenanceSystem.Database.Models.EmployeeModel;
 import java.util.List;
 import java.util.Optional;
 

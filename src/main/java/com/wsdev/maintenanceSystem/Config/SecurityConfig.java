@@ -38,13 +38,13 @@ public class SecurityConfig
     public SecurityFilterChain securityFilterChain( HttpSecurity http ) throws Exception
     {
         http
-                .authorizeHttpRequests( authorize -> authorize
-                        .requestMatchers( HttpMethod.POST, "/users" ).permitAll()
-                        .requestMatchers( HttpMethod.POST, "/login" ).permitAll()
-                        .anyRequest().authenticated() )
-                .csrf( csrf -> csrf.disable() )
-                .oauth2ResourceServer( oauth2 -> oauth2.jwt( Customizer.withDefaults() ) )
-                .sessionManagement( session -> session.sessionCreationPolicy( SessionCreationPolicy.STATELESS ) );
+            .authorizeHttpRequests( authorize -> authorize
+                    .requestMatchers( HttpMethod.POST, "/api/v1/user/add" ).permitAll()
+                    .requestMatchers( HttpMethod.POST, "/api/v1/auth/login" ).permitAll()
+                    .anyRequest().authenticated() )
+            .csrf( csrf -> csrf.disable() )
+            .oauth2ResourceServer( oauth2 -> oauth2.jwt( Customizer.withDefaults() ) )
+            .sessionManagement( session -> session.sessionCreationPolicy( SessionCreationPolicy.STATELESS ) );
 
         return http.build();
     }

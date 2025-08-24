@@ -1,7 +1,7 @@
 package com.wsdev.maintenanceSystem.Services;
 
-import com.wsdev.maintenanceSystem.Models.UserModel;
-import com.wsdev.maintenanceSystem.Repository.UserRepository;
+import com.wsdev.maintenanceSystem.Database.Models.UserModel;
+import com.wsdev.maintenanceSystem.Database.Repository.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -2,8 +2,8 @@ package com.wsdev.maintenanceSystem.Controller;
 
 import com.wsdev.maintenanceSystem.Dto.LoginRequestDTO;
 import com.wsdev.maintenanceSystem.Dto.LoginResponseDTO;
-import com.wsdev.maintenanceSystem.Models.Role;
-import com.wsdev.maintenanceSystem.Repository.UserRepository;
+import com.wsdev.maintenanceSystem.Database.Models.Role;
+import com.wsdev.maintenanceSystem.Database.Repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +16,7 @@ import java.time.Instant;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping( "/api/v1/account" )
+@RequestMapping( "/api/v1/auth" )
 @CrossOrigin( origins = "http://localhost:5173" )
 public class TokenController
 {

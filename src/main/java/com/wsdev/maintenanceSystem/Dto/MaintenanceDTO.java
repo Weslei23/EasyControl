@@ -1,6 +1,7 @@
 package com.wsdev.maintenanceSystem.Dto;
 
-import com.wsdev.maintenanceSystem.Models.*;
+import com.wsdev.maintenanceSystem.Database.Models.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

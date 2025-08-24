@@ -1,10 +1,10 @@
 package com.wsdev.maintenanceSystem.Controller;
 
 import com.wsdev.maintenanceSystem.Dto.CreateUserDTO;
-import com.wsdev.maintenanceSystem.Models.Role;
-import com.wsdev.maintenanceSystem.Models.UserModel;
-import com.wsdev.maintenanceSystem.Repository.RoleRepository;
-import com.wsdev.maintenanceSystem.Repository.UserRepository;
+import com.wsdev.maintenanceSystem.Database.Models.Role;
+import com.wsdev.maintenanceSystem.Database.Models.UserModel;
+import com.wsdev.maintenanceSystem.Database.Repository.RoleRepository;
+import com.wsdev.maintenanceSystem.Database.Repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping( "/api/v1/users" )
+@RequestMapping( "/api/v1/user" )
 @CrossOrigin( origins = "http://localhost:5173" )
 public class UserController
 {

@@ -1,7 +1,7 @@
 package com.wsdev.maintenanceSystem.Dto;
 
-import com.wsdev.maintenanceSystem.Models.StatusModel;
-import com.wsdev.maintenanceSystem.Models.TypeMaterialModel;
+import com.wsdev.maintenanceSystem.Database.Models.StatusModel;
+import com.wsdev.maintenanceSystem.Database.Models.TypeMaterialModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;

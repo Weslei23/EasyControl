@@ -1,14 +1,16 @@
 package com.wsdev.maintenanceSystem.Services;
 
+import com.wsdev.maintenanceSystem.Database.Models.CustomerModel;
+import com.wsdev.maintenanceSystem.Database.Models.EmployeeModel;
+import com.wsdev.maintenanceSystem.Database.Models.MaintenanceModel;
 import com.wsdev.maintenanceSystem.Dto.MaintenanceDTO;
 import com.wsdev.maintenanceSystem.Dto.MaintenanceRequestDTO;
 import com.wsdev.maintenanceSystem.Exception.CustomerNotFoundException;
 import com.wsdev.maintenanceSystem.Exception.EmployeeNotFoundException;
 import com.wsdev.maintenanceSystem.Exception.MaintenanceNotFoundException;
-import com.wsdev.maintenanceSystem.Models.*;
-import com.wsdev.maintenanceSystem.Repository.CustomerRepository;
-import com.wsdev.maintenanceSystem.Repository.EmployeeRepository;
-import com.wsdev.maintenanceSystem.Repository.MaintenanceRepository;
+import com.wsdev.maintenanceSystem.Database.Repository.CustomerRepository;
+import com.wsdev.maintenanceSystem.Database.Repository.EmployeeRepository;
+import com.wsdev.maintenanceSystem.Database.Repository.MaintenanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

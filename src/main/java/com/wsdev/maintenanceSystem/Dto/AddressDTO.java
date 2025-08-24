@@ -1,6 +1,6 @@
 package com.wsdev.maintenanceSystem.Dto;
 
-import com.wsdev.maintenanceSystem.Models.AddressModel;
+import com.wsdev.maintenanceSystem.Database.Models.AddressModel;
 
 public record AddressDTO( String street, String number, String complement, String neighborhood, String city, String state, String postalCode )
 {
