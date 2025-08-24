@@ -2,7 +2,7 @@ package com.wsdev.maintenanceSystem.Controller;
 
 import com.wsdev.maintenanceSystem.Dto.LoginRequestDTO;
 import com.wsdev.maintenanceSystem.Dto.LoginResponseDTO;
-import com.wsdev.maintenanceSystem.Database.Models.Role;
+import com.wsdev.maintenanceSystem.Database.Models.RoleModel;
 import com.wsdev.maintenanceSystem.Database.Repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -31,12 +31,12 @@ public class TokenController
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/login")
+    @PostMapping( "/login" )
     public ResponseEntity<LoginResponseDTO> login( @RequestBody LoginRequestDTO loginRequest )
     {
         var user = userRepository.getUserByUsername( loginRequest.username() );
 
-        if( user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder ) )
+        if( user.isEmpty() || !user.get().isLoginCorrect( loginRequest, passwordEncoder ) )
         {
             throw new BadCredentialsException( "user or password is invalid!" );
         }
@@ -46,7 +46,7 @@ public class TokenController
 
         var scopes = user.get().getRoles()
                 .stream()
-                .map( Role::getName )
+                .map( RoleModel::getName )
                 .collect( Collectors.joining( " " ) );
 
         var claims = JwtClaimsSet.builder()

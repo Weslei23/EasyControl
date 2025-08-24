@@ -1,7 +1,7 @@
 package com.wsdev.maintenanceSystem.Controller;
 
 import com.wsdev.maintenanceSystem.Dto.CreateUserDTO;
-import com.wsdev.maintenanceSystem.Database.Models.Role;
+import com.wsdev.maintenanceSystem.Database.Models.RoleModel;
 import com.wsdev.maintenanceSystem.Database.Models.UserModel;
 import com.wsdev.maintenanceSystem.Database.Repository.RoleRepository;
 import com.wsdev.maintenanceSystem.Database.Repository.UserRepository;
@@ -36,9 +36,10 @@ public class UserController
     @PostMapping( "/add" )
     public ResponseEntity<Void> addUser( @RequestBody CreateUserDTO dto )
     {
-        var basicRole = roleRepository.getByName( Role.Values.BASIC.name() );
+        var basicRole = roleRepository.getByName( RoleModel.Values.BASIC.name() );
 
         var userFromDb = userRepository.getUserByUsername( dto.username() );
+
         if ( userFromDb.isPresent() )
         {
             throw new ResponseStatusException( HttpStatus.UNPROCESSABLE_ENTITY );

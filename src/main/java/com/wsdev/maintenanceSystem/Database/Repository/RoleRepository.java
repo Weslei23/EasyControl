@@ -1,9 +1,9 @@
 package com.wsdev.maintenanceSystem.Database.Repository;
 
-import com.wsdev.maintenanceSystem.Database.Models.Role;
+import com.wsdev.maintenanceSystem.Database.Models.RoleModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Long>
+public interface RoleRepository extends JpaRepository<RoleModel, Long>
 {
-    Role getByName( String name );
+    RoleModel getByName(String name );
 }

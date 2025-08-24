@@ -19,9 +19,13 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -38,15 +42,32 @@ public class SecurityConfig
     public SecurityFilterChain securityFilterChain( HttpSecurity http ) throws Exception
     {
         http
-            .authorizeHttpRequests( authorize -> authorize
-                    .requestMatchers( HttpMethod.POST, "/api/v1/user/add" ).permitAll()
-                    .requestMatchers( HttpMethod.POST, "/api/v1/auth/login" ).permitAll()
-                    .anyRequest().authenticated() )
-            .csrf( csrf -> csrf.disable() )
-            .oauth2ResourceServer( oauth2 -> oauth2.jwt( Customizer.withDefaults() ) )
-            .sessionManagement( session -> session.sessionCreationPolicy( SessionCreationPolicy.STATELESS ) );
+                .cors( cors -> cors.configurationSource( corsConfigurationSource() ) ) // habilita CORS global
+                .csrf( csrf -> csrf.disable() )
+                .authorizeHttpRequests( authorize -> authorize
+                        .requestMatchers( HttpMethod.POST, "/api/v1/user/add" ).permitAll()
+                        .requestMatchers( HttpMethod.POST, "/api/v1/auth/login" ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer( oauth2 -> oauth2.jwt( Customizer.withDefaults() ) )
+                .sessionManagement( session -> session.sessionCreationPolicy( SessionCreationPolicy.STATELESS ) );
 
         return http.build();
+    }
+
+    // Configuração global de CORS
+    @Bean
+    CorsConfigurationSource corsConfigurationSource()
+    {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins( List.of( "http://localhost:5173" ) );
+        config.setAllowedMethods( List.of( "GET", "POST", "PUT", "DELETE", "OPTIONS" ) );
+        config.setAllowedHeaders( List.of( "*" ) );
+        config.setAllowCredentials( true );
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration( "/**", config );
+        return source;
     }
 
     @Bean
@@ -59,8 +80,7 @@ public class SecurityConfig
     public JwtEncoder jwtEncoder()
     {
         JWK jwk = new RSAKey.Builder( this.publicKey ).privateKey( privateKey ).build();
-        var jwks = new ImmutableJWKSet<>( new JWKSet( jwk ) );
-
+        var jwks = new ImmutableJWKSet<>(new JWKSet( jwk ) );
         return new NimbusJwtEncoder( jwks );
     }
 

@@ -1,6 +1,6 @@
 package com.wsdev.maintenanceSystem.Config;
 
-import com.wsdev.maintenanceSystem.Database.Models.Role;
+import com.wsdev.maintenanceSystem.Database.Models.RoleModel;
 import com.wsdev.maintenanceSystem.Database.Models.UserModel;
 import com.wsdev.maintenanceSystem.Database.Repository.RoleRepository;
 import com.wsdev.maintenanceSystem.Database.Repository.UserRepository;
@@ -31,19 +31,19 @@ public class AdminUserConfig implements CommandLineRunner
     @Transactional
     public void run( String... args ) throws Exception
     {
-        var roleAdmin = roleRepository.getByName( Role.Values.ADMIN.name() );
+        var roleAdmin = roleRepository.getByName( RoleModel.Values.ADMIN.name() );
 
         var userAdmin = userRepository.getUserByUsername( "admin" );
 
         userAdmin.ifPresentOrElse(
                 user -> {
-                    System.out.println( "admin ja existe" );
+                    System.out.println( "Conta administrador já existente!" );
                 },
                 () -> {
                     var user = new UserModel();
                     user.setUsername( "admin" );
                     user.setPassword( passwordEncoder.encode( "123" ) );
-                    Role basicRole = roleRepository.getByName( Role.Values.BASIC.name() );
+                    RoleModel basicRole = roleRepository.getByName( RoleModel.Values.BASIC.name() );
                     if ( basicRole == null )
                     {
                         throw new IllegalStateException( "Role BASIC não encontrada no banco" );

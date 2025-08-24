@@ -47,7 +47,7 @@ public class CustomerService
     {
         if( customerRepository.existsByEmail( customerRequestDTO.email() ) )
         {
-            throw new CustomerExistsException( "Customer already exists" );
+            throw new CustomerExistsException( "Customer already exists with this email" );
         }
 
         CustomerModel customerModel = customerRepository.save( customerRequestDTO.toEntity() );
